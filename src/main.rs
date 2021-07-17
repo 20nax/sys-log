@@ -1,12 +1,8 @@
-use systemstat::{System, Platform, saturating_sub_bytes};
-use std::thread;
-use std::time::Duration;
+use sysinfo::{ComponentExt, System, SystemExt};
 
 fn main() {
-    let sys = System::new();
-    match sys.load_average() {
-        Ok(loadavg) => println!("\nLoad average: {} {} {}", loadavg.one, loadavg.five, loadavg.fifteen),
-        Err(x) => println!("\nLoad average: error: {}", x)
+    let system = System::new_all();
+    for component in system.components() {
+        println!("{}\t\t{}", component.label(), component.temperature());
     }
-    println!("Hello, world!");
 }
