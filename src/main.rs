@@ -6,6 +6,7 @@ fn main() {
     let system = System::new_all();
     let mut cpu_service = service::cpu::CpuService::new(system);
     let mut memory_service = service::ram::RamService::new(System::new_all());
+    let mut disk_service = service::disk::DiskService::new(System::new_all());
 
     match cpu_service.get_temp("Core 0") {
         Ok(temp) => println!("Core 0 temp: {}", temp),
@@ -23,5 +24,19 @@ fn main() {
 
     let res = memory_service.get_used_memory();
     // optionnal division to increase readability
-    println!("memory available : {}", res / 1000);
+    println!("memory used : {}", res / 1000);
+
+    let name_list = disk_service.get_disk_name();
+    let available_list = disk_service.get_disk_available_space();
+    let total_space_list = disk_service.get_disk_total_space();
+    let size = name_list.len();
+
+    for x in 0..size {
+        println!(
+            "Disk: {:?}, available: {} GB, total: {} GB",
+            name_list[x],
+            available_list[x] / 1000000000,
+            total_space_list[x] / 1000000000
+        )
+    }
 }

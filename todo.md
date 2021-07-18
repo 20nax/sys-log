@@ -3,7 +3,7 @@
 fetch:
 - Cpu load (overall and per core) *
 - Cpu temps *
-- Memory usage
+- Memory usage *
 - Disk usage
-- Disk space
+- Disk space *
 - Internet traffic
