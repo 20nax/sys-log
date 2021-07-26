@@ -18,7 +18,9 @@ async fn main() -> std::io::Result<()> {
                     memory_service: service::ram::RamService::new(System::new_all()),
                 })),
             })
-            .service(controller::system::all_cpu)
+            .service(controller::system::cpu_usage)
+            .service(controller::system::all_comp_temp)
+            .service(controller::system::comp_temp)
     })
     .bind("127.0.0.1:8080")?
     .run()
