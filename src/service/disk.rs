@@ -34,11 +34,3 @@ impl DiskService {
         return vec;
     }
 }
-
-impl Clone for DiskService {
-    fn clone(&self) -> Self {
-        DiskService {
-            system: System::new_all(),
-        }
-    }
-}
