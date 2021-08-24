@@ -15,7 +15,10 @@ fn main() {
             println!("Sucess: cpu logs");
             res
         }
-        Err(_) => panic!("Failed: cpu logs"),
+        Err(e) => {
+            eprint!("{}", e);
+            panic!("Failed: cpu logs")
+        }
     };
 
     let res = controller::db::ram_write(con);
@@ -26,7 +29,7 @@ fn main() {
         }
         Err(e) => {
             eprint!("{}", e);
-            return;
+            panic!("Failed: ram logs")
         }
     };
 }
