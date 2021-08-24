@@ -7,9 +7,8 @@ fn main() {
     let client = Client::connect("host=localhost user=postgres password=password", NoTls);
     let con = match client {
         Ok(client) => client,
-        Err(_) => panic!("Aled"),
+        Err(_) => panic!("Couln't connect to DB"),
     };
-    
     let res = controller::db::cpu_write(con);
     let con = match res {
         Ok(res) => {
@@ -19,12 +18,15 @@ fn main() {
         Err(_) => panic!("Failed: cpu logs"),
     };
 
-    let res = controller::db::cpu_write(con);
+    let res = controller::db::ram_write(con);
     let con = match res {
         Ok(_) => {
-            println!("Sucess: cpu logs");
+            println!("Sucess: ram logs");
             res
         }
-        Err(_) => panic!("Failed: cpu logs"),
-    }
+        Err(e) => {
+            eprint!("{}", e);
+            return;
+        }
+    };
 }

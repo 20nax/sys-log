@@ -13,6 +13,6 @@ Create TABLE IF NOT EXISTS cpu (
 );
 Create TABLE IF NOT EXISTS ram (
     date TIMESTAMP NOT NULL,
-    used INT,
-    total INT
+    total INT,
+    used INT
 );

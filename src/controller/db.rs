@@ -33,3 +33,20 @@ pub fn cpu_write(mut con: postgres::Client) -> Result<postgres::Client, postgres
     &[&timestamp, &cpu_load[0] , &cpu_load[1],&cpu_load[2],&cpu_load[3],&cpu_temp[0].1, &cpu_temp[1].1,&cpu_temp[2].1,&cpu_temp[3].1])?;
     return Ok(con);
 }
+
+pub fn ram_write(mut con: postgres::Client) -> Result<postgres::Client, postgres::Error> {
+    let mut ram_service: service::ram::RamService =
+        service::ram::RamService::new(System::new_all());
+
+    let total_mem: i32 = ram_service.get_total_memory() as i32;
+
+    let used_mem: i32 = ram_service.get_used_memory() as i32;
+
+    let timestamp = time::SystemTime::now();
+    con.execute(
+        "INSERT INTO ram (date, total, used) \
+     VALUES ($1, $2, $3)",
+        &[&timestamp, &total_mem, &used_mem],
+    )?;
+    return Ok(con);
+}
